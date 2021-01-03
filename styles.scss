@@ -1,0 +1,58 @@
+.hide {
+  display: none;
+}
+
+body {
+  background-color: #60a5fa;
+  color: white;
+  font-family: "Oxygen", sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-weight: 400;
+  margin-bottom: 30px;
+}
+
+input {
+  width: 200px;
+  height: 20px;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+}
+
+.btn {
+  color: white;
+  text-decoration: none;
+  background-color: #93c5fd;
+  width: 100px;
+  padding: 10px;
+  border-radius: 25px;
+}
+
+.container {
+  width: 90%;
+  margin: 20vh auto;
+}
+
+.trophy {
+  width: 150px;
+  object-fit: cover;
+}
+
+.text-primary {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-bottom: 10vh;
+}
+
+a.designed {
+  color: white;
+}
+
+.num {
+  margin-bottom: 25px;
+}
