@@ -56,3 +56,18 @@ a.designed {
 .num {
   margin-bottom: 25px;
 }
+
+.output {
+  input[type="text"] {
+    height: 25px;
+  }
+
+  input[type="submit"] {
+    display: block;
+    margin: auto;
+    width: 100px;
+    height: 35px;
+    margin-top: 20px;
+    padding: 5px;
+  }
+}
