@@ -23,6 +23,7 @@ play.addEventListener("click", function (e) {
 
 maxForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  maxMessage.classList.add("hidden");
   if (maxVal.value > 999999999) {
     message.classList.remove("hidden");
     message.textContent = "max number can't be more than 9 digits";
@@ -65,13 +66,13 @@ reset.addEventListener("click", function () {
   form.classList.add("hidden");
   tries = 0;
   guess = null;
+  max = null;
   document.querySelector("h1").textContent = "Guessing Game!";
   message.style.color = "red";
 });
 
 const generate = function (max) {
   random = Math.trunc(Math.random() * max + 1);
-  console.log(random);
 };
 
 const check = function () {
