@@ -57,6 +57,7 @@ input {
   padding: 15px;
   display: block;
   margin: 10px 0;
+  -webkit-appearance: none;
 }
 
 .maxBtn,
@@ -76,5 +77,11 @@ input {
 .img {
   width: 200px;
   margin: 0;
+}
+
+input[type="text"],
+input[type="number"],
+textarea {
+  font-size: 16px;
 }
 /*# sourceMappingURL=styles.css.map */
