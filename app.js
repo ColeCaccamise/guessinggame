@@ -7,6 +7,7 @@ const maxBtn = document.querySelector(".maxBtn");
 const formBtn = document.querySelector(".formBtn");
 const maxMessage = document.querySelector(".maxMessage");
 const maxMsg = document.querySelector(".maxMsg");
+const maxError = document.querySelector(".maxError");
 const input = document.querySelector(".guess");
 const message = document.querySelector(".message");
 
@@ -23,7 +24,9 @@ play.addEventListener("click", function (e) {
 
 maxForm.addEventListener("submit", function (e) {
   e.preventDefault();
+  message.classList.add("hidden");
   maxMessage.classList.add("hidden");
+
   if (maxVal.value > 999999999) {
     message.classList.remove("hidden");
     message.textContent = "max number can't be more than 9 digits";
@@ -42,10 +45,10 @@ maxForm.addEventListener("submit", function (e) {
     maxMsg.textContent = max;
     input.classList.remove("hidden");
   } else {
-    message.classList.toggle("hidden");
+    message.classList.remove("hidden");
     message.textContent = "max number must be greater than 1";
     setTimeout(function () {
-      message.classList.toggle("hidden");
+      message.classList.add("hidden");
     }, 1500);
   }
 });
@@ -67,6 +70,7 @@ reset.addEventListener("click", function () {
   tries = 0;
   guess = null;
   max = null;
+  random = null;
   document.querySelector("h1").textContent = "Guessing Game!";
   message.style.color = "red";
 });
@@ -89,13 +93,16 @@ const check = function () {
     message.classList.remove("hidden");
   } else if (guess > random) {
     message.classList.remove("hidden");
-    maxMessage.textContent = "too high!";
+    message.style.color = "black";
+    message.textContent = "too high!";
     tries++;
-    message.classList.add("hidden");
+    maxMessage.classList.add("hidden");
   } else if (guess < random) {
     message.classList.remove("hidden");
-    maxMessage.textContent = "too low!";
+    message.style.color = "black";
+    message.textContent = "too low!";
     tries++;
-    message.classList.add("hidden");
+
+    maxMessage.classList.add("hidden");
   }
 };
