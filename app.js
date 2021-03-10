@@ -1,78 +1,100 @@
-const startBtn = document.querySelector(".btn");
-const playAgainBtn = document.querySelector(".playAgain");
-const output = document.querySelector(".output");
-const heading = document.querySelector(".heading");
-const maxForm = document.querySelector(".maxForm");
-const maxInput = document.querySelector(".maxInput");
-const guessForm = document.querySelector(".guessForm");
-const guessInput = document.querySelector(".guessInput");
-const num = document.querySelector(".num");
-const trophy = document.querySelector(".trophy");
-const h1 = document.querySelector("h1");
-const quit = document.querySelector(".quit");
+const play = document.querySelector(".playBtn");
+const reset = document.querySelector(".reset");
+const form = document.querySelector(".form");
+const maxForm = document.querySelector(".max");
+const maxVal = document.querySelector(".maxNum");
+const maxBtn = document.querySelector(".maxBtn");
+const formBtn = document.querySelector(".formBtn");
+const maxMessage = document.querySelector(".maxMessage");
+const maxMsg = document.querySelector(".maxMsg");
+const input = document.querySelector(".guess");
+const message = document.querySelector(".message");
 
-const maxToggle = () => {
-  startBtn.classList.toggle("hide");
-  heading.classList.toggle("hide");
-  maxForm.classList.toggle("hide");
-  h1.classList.toggle("hide");
-};
+let guess;
+let max;
+let random;
+let tries = 0;
 
-const max = (e) => {
-  e.preventDefault();
-  let max = maxInput.value;
-  max = Math.floor(max);
-  heading.innerText = "Choose a max number";
-
-  if (isNaN(max)) {
-    heading.innerText = "Choose a max NUMBER";
-  }
-
-  if (!isNaN(max)) {
-    console.log(max);
-    let answer = Math.floor(Math.random() * max + 1);
-    let numTries = 1; // calculate for game over text
-    console.log(answer);
-
-    guessForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      let guess = guessInput.value;
-      console.log(guess);
-      guessInput.value = "";
-      if (guess == answer && numTries == 1) {
-        heading.innerHTML = "You won! Congrats!";
-        num.innerText = `You guessed correctly in one try!!`;
-        guessForm.classList.toggle("hide");
-        playAgainBtn.classList.toggle("hide");
-        trophy.classList.toggle("hide");
-        quit.classList.toggle("hide");
-      } else if (guess == answer) {
-        heading.innerText = "You won! Congrats!";
-        num.innerText = `You guessed correctly in ${numTries} tries`;
-        guessForm.classList.toggle("hide");
-        playAgainBtn.classList.toggle("hide");
-        trophy.classList.toggle("hide");
-        quit.classList.toggle("hide");
-      } else if (guess > answer) {
-        numTries++;
-        heading.innerText = "Guess lower!";
-      } else {
-        numTries++;
-        heading.innerText = "Guess higher!";
-      }
-    });
-  }
-
-  maxInput.value = "";
-
-  heading.innerText = `Guess a number 1 - ${max}`;
-  maxForm.classList.toggle("hide");
-  guessForm.classList.toggle("hide");
-};
-
-// start game
-maxToggle();
-maxForm.addEventListener("submit", max);
-playAgainBtn.addEventListener("click", () => {
-  window.location.href = "#";
+play.addEventListener("click", function (e) {
+  play.classList.add("hidden");
+  maxForm.classList.remove("hidden");
+  maxBtn.classList.remove("hidden");
 });
+
+maxForm.addEventListener("submit", function (e) {
+  e.preventDefault();
+  if (maxVal.value > 999999999) {
+    message.classList.remove("hidden");
+    message.textContent = "max number can't be more than 9 digits";
+    setTimeout(function () {
+      message.classList.add("hidden");
+    }, 1500);
+  } else if (maxVal.value > 1) {
+    max = Math.trunc(maxVal.value);
+    maxVal.value = "";
+    generate(max);
+    maxForm.classList.add("hidden");
+    maxBtn.classList.add("hidden");
+    form.classList.remove("hidden");
+    formBtn.classList.remove("hidden");
+    maxMessage.classList.remove("hidden");
+    maxMsg.textContent = max;
+    input.classList.remove("hidden");
+  } else {
+    message.classList.toggle("hidden");
+    message.textContent = "max number must be greater than 1";
+    setTimeout(function () {
+      message.classList.toggle("hidden");
+    }, 1500);
+  }
+});
+
+form.addEventListener("submit", function (e) {
+  e.preventDefault();
+  guess = input.value;
+  input.value = "";
+  check();
+});
+
+reset.addEventListener("click", function () {
+  maxForm.classList.remove("hidden");
+  maxBtn.classList.remove("hidden");
+  message.classList.add("hidden");
+  maxMessage.classList.add("hidden");
+  reset.classList.add("hidden");
+  form.classList.add("hidden");
+  tries = 0;
+  guess = null;
+  document.querySelector("h1").textContent = "Guessing Game!";
+  message.style.color = "red";
+});
+
+const generate = function (max) {
+  random = Math.trunc(Math.random() * max + 1);
+  console.log(random);
+};
+
+const check = function () {
+  if (guess == random) {
+    tries++;
+    document.querySelector("h1").textContent = "Congratulations!";
+    message.style.color = "black";
+    message.classList.remove("hidden");
+    message.textContent = `You guessed correctly in ${tries} tries`;
+    maxMessage.classList.add("hidden");
+    formBtn.classList.add("hidden");
+    input.classList.add("hidden");
+    reset.classList.remove("hidden");
+    message.classList.remove("hidden");
+  } else if (guess > random) {
+    message.classList.remove("hidden");
+    maxMessage.textContent = "too high!";
+    tries++;
+    message.classList.add("hidden");
+  } else if (guess < random) {
+    message.classList.remove("hidden");
+    maxMessage.textContent = "too low!";
+    tries++;
+    message.classList.add("hidden");
+  }
+};
